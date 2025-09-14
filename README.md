@@ -1,155 +1,132 @@
 # Laravel CRUD App
 
-Project ini adalah contoh **Laravel CRUD sederhana** menggunakan Laravel 11 dan MySQL.  
-README ini berfokus pada instalasi di **macOS** dengan Homebrew, serta disertakan catatan tambahan untuk **Windows** dan **Linux**.
+Proyek ini adalah contoh **Laravel Project dengan basic CRUD functionality**.  
+Instruksi di bawah berfokus pada **macOS**, namun juga disertakan langkah untuk **Windows** dan **Linux**.
 
 ---
 
-## 🚀 Prasyarat
+## 1. Persyaratan
 
-- **PHP** >= 8.2
-- **Composer** (dependency manager untuk PHP)
-- **MySQL** (via Homebrew di macOS, atau XAMPP/MAMP di Windows/Linux)
-- **Git** (opsional)
+Sebelum memulai, pastikan sudah terinstal:
+- **PHP >= 8.1**
+- **Composer**
+- **MySQL** (atau MariaDB)
+- **Node.js & npm** (opsional, untuk asset build)
 
 ---
 
-## ⚙️ Instalasi di macOS
+## 2. Instalasi Laravel Project
 
-### 1. Install PHP & Composer
+### macOS & Linux
 ```bash
-brew install php
-brew install composer
+composer create-project laravel/laravel crud-app
+cd crud-app
 ```
 
-### 2. Install MySQL
-```bash
-brew install mysql
+### Windows (Command Prompt / PowerShell)
+```powershell
+composer create-project laravel/laravel crud-app
+cd crud-app
 ```
 
-Jalankan MySQL server:
+---
+
+## 3. Setup Database
+
+### Buat Database di MySQL
+Login ke MySQL melalui terminal:
+
 ```bash
-/opt/homebrew/opt/mysql/bin/mysqld_safe --datadir=/opt/homebrew/var/mysql
+mysql -u root -p
 ```
 
-### 3. Buat Database
-Masuk ke MySQL:
-```bash
-mysql -u root
-```
-
-Buat database baru:
+Setelah masuk ke MySQL shell:
 ```sql
 CREATE DATABASE crud_app;
-```
-
-Cek daftar database:
-```sql
-SHOW DATABASES;
+EXIT;
 ```
 
 ---
 
-### 4. Clone Project & Install Dependencies
-```bash
-git clone <url-repo-anda>
-cd crud-app
-composer install
-```
+## 4. Konfigurasi Environment
 
-### 5. Update File `.env`
-Buka file `.env` dan sesuaikan konfigurasi database:
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=crud_app
-DB_USERNAME=root
-DB_PASSWORD=
-```
+1. **Copy file `.env.example` ke `.env`**
 
-> Biarkan `DB_PASSWORD` kosong jika root MySQL tidak memiliki password.
+   ```bash
+   cp .env.example .env   # macOS & Linux
+   copy .env.example .env # Windows
+   ```
+
+2. **Update koneksi database di `.env`**
+
+   Buka file `.env` dan sesuaikan:
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=crud_app
+   DB_USERNAME=root
+   DB_PASSWORD=your_password
+   ```
+
+3. **Generate Laravel Secret Key**
+   ```bash
+   php artisan key:generate
+   ```
+
+   Perintah ini akan menambahkan `APP_KEY=base64:...` otomatis ke file `.env`.
 
 ---
 
-### 6. Migrasi Database
+## 5. Migrasi Database
+
 Jalankan perintah:
 ```bash
 php artisan migrate
 ```
 
-Ini akan membuat tabel default Laravel (`users`, `password_resets`, dll.) di database `crud_app`.
-
 ---
 
-### 7. Jalankan Server Laravel
+## 6. Menjalankan Server Laravel
+
+Untuk menjalankan server lokal:
 ```bash
 php artisan serve
 ```
 
-Server akan berjalan di:
+✅ Secara default, aplikasi berjalan di:
 ```
 http://127.0.0.1:8000
 ```
-
-> Laravel default membuka port **8000**, kecuali kamu tentukan manual dengan `--port=xxxx`.
-
----
-
-## 💻 Instalasi di Windows
-
-1. Install **XAMPP** (sudah ada Apache, PHP, dan MySQL).  
-2. Start Apache & MySQL lewat XAMPP Control Panel.  
-3. Download & install **Composer for Windows** dari [getcomposer.org](https://getcomposer.org).  
-4. Ikuti langkah yang sama: buat database `crud_app` lewat **phpMyAdmin** atau `mysql -u root`.  
-5. Update `.env`, lalu jalankan:
-   ```bash
-   php artisan migrate
-   php artisan serve
-   ```
+Port yang terbuka: **8000**
 
 ---
 
-## 🐧 Instalasi di Linux (Ubuntu/Debian)
+## 7. Perintah Artisan Penting
 
-1. Install PHP, Composer, MySQL:
-   ```bash
-   sudo apt update
-   sudo apt install php php-mysql mysql-server composer unzip git
-   ```
-2. Start MySQL:
-   ```bash
-   sudo service mysql start
-   ```
-3. Login ke MySQL:
-   ```bash
-   mysql -u root -p
-   CREATE DATABASE crud_app;
-   ```
-4. Clone project & jalankan:
-   ```bash
-   composer install
-   php artisan migrate
-   php artisan serve
-   ```
+- `php artisan migrate` → Menjalankan migrasi database
+- `php artisan make:model NamaModel -mcr` → Membuat Model, Controller, dan Resource
+- `php artisan serve` → Menjalankan server lokal
+- `php artisan tinker` → Interactive REPL untuk Laravel
 
 ---
 
-## 📌 Perintah Artisan yang Penting
+## 8. Instruksi untuk Windows & Linux
 
-- `php artisan serve` → Menjalankan server Laravel (default port 8000).  
-- `php artisan migrate` → Membuat tabel di database sesuai migration.  
-- `php artisan make:model` → Membuat model baru.  
-- `php artisan make:controller` → Membuat controller baru.  
-- `php artisan tinker` → Console interaktif untuk Laravel.
+Langkah sama dengan macOS, hanya perbedaan pada command copy `.env`:
+- **Linux/macOS:** `cp .env.example .env`
+- **Windows:** `copy .env.example .env`
 
 ---
 
-## 🎯 Hasil
+## 9. Catatan
 
-Setelah semua langkah selesai, buka browser di:
-```
-http://127.0.0.1:8000
-```
+- Default port Laravel adalah **8000**, bisa diubah dengan:
+  ```bash
+  php artisan serve --port=8080
+  ```
+- Pastikan MySQL sudah berjalan sebelum melakukan migrasi.
 
-Dan aplikasi Laravel CRUD sudah siap digunakan.
+---
+
+🎉 Sekarang aplikasi Laravel CRUD sudah siap dijalankan!
