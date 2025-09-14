@@ -1,4 +1,4 @@
-# Laravel CRUD App
+# Laravel CRUD App by I Dewa Nyoman Acarya Wibawantra NRP : 5025251222
 
 Proyek ini adalah contoh **Laravel Project dengan basic CRUD functionality**.  
 Instruksi di bawah berfokus pada **macOS**, namun juga disertakan langkah untuk **Windows** dan **Linux**.
