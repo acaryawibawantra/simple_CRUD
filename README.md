@@ -100,6 +100,12 @@ http://127.0.0.1:8000
 ```
 Port yang terbuka: **8000**
 
+### Contoh URL CRUD
+Untuk mengakses fitur CRUD Profiles:
+```
+http://127.0.0.1:8000/profiles
+```
+
 ---
 
 ## 7. Perintah Artisan Penting
